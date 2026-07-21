@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meine Womo-Touren</title>
+<title>Womo-Wochenende am Kleinen Brombachsee – Absberg</title>
 <style>
 /* required styles */
 
@@ -671,37 +671,68 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <style>
   :root { --green:#2f5d3a; --greenL:#e7f0e9; --ink:#233027; --grey:#5b6b60; --line:#d7e2da; }
   * { box-sizing:border-box; }
-  body { margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:#f4f7f5; }
-  header { background:var(--green); color:#fff; padding:20px; }
-  header h1 { margin:0 0 4px; font-size:1.4rem; }
+  body { margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+         color:var(--ink); background:#f4f7f5; line-height:1.5; }
+  header { background:var(--green); color:#fff; padding:18px 20px; }
+  header h1 { margin:0 0 4px; font-size:1.35rem; }
   header p { margin:0; opacity:.9; font-size:.9rem; }
   .wrap { max-width:1000px; margin:0 auto; padding:16px; }
-  #map { height:42vh; min-height:280px; border-radius:12px; border:1px solid var(--line); margin-bottom:16px; z-index:0; }
-  .cards { display:grid; grid-template-columns:1fr; gap:12px; }
-  @media(min-width:680px){ .cards { grid-template-columns:1fr 1fr; } }
-  .card { display:block; background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px;
-          text-decoration:none; color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.05); transition:transform .08s, box-shadow .08s; }
-  .card:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.10); }
-  .card h3 { margin:0 0 4px; color:var(--green); font-size:1.05rem; }
-  .card .sub { margin:0 0 8px; font-size:.82rem; color:var(--grey); }
-  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-  .chip { background:var(--greenL); border:1px solid var(--line); border-radius:6px; padding:2px 7px; font-size:.72rem; }
-  .chip b { color:var(--grey); font-weight:600; margin-right:3px; }
-  .open { color:#1e6f8b; font-size:.85rem; font-weight:600; }
-  .empty { color:var(--grey); }
+  .metabar { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+  .meta { background:var(--greenL); border:1px solid var(--line); border-radius:8px; padding:6px 10px; font-size:.82rem; }
+  .meta .ml { color:var(--grey); margin-right:6px; }
+  .meta .mv { font-weight:600; }
+  #map { height:60vh; min-height:360px; width:100%; border-radius:12px; border:1px solid var(--line);
+         box-shadow:0 1px 4px rgba(0,0,0,.06); z-index:0; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 14px; margin:10px 2px 4px; font-size:.82rem; color:var(--grey); }
+  .grid { display:grid; grid-template-columns:1fr; gap:12px; margin-top:14px; }
+  @media(min-width:720px){ .grid.two { grid-template-columns:1fr 1fr; } }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+  .card h3 { margin:0 0 8px; font-size:1.02rem; color:var(--green); }
+  .fav { font-size:.72rem; background:#fff4d6; color:#8a6a00; border:1px solid #ecd9a0; padding:1px 7px; border-radius:20px; vertical-align:middle; }
+  ul.tl { list-style:none; padding:0; margin:0; }
+  ul.tl li { padding:6px 0; border-bottom:1px dashed var(--line); }
+  ul.tl li:last-child { border-bottom:none; }
+  ul.tl .t { display:inline-block; min-width:80px; font-weight:600; color:var(--green); }
+  ul.bul { margin:0; padding-left:18px; }
+  ul.bul li { margin:4px 0; }
+  .kv { font-size:.9rem; margin:3px 0; }
+  a { color:#1e6f8b; }
+  table.cost { width:100%; border-collapse:collapse; font-size:.88rem; }
+  table.cost th, table.cost td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); }
+  table.cost th { background:var(--green); color:#fff; }
+  table.cost .amt { text-align:right; white-space:nowrap; }
+  table.cost tr.tot td { background:var(--greenL); }
+  .note, .small p { font-size:.8rem; color:var(--grey); }
+  .section-title { margin:20px 2px 2px; color:var(--green); font-size:1.05rem; }
+  .pin { display:flex; align-items:center; justify-content:center; width:30px; height:30px;
+         border-radius:50% 50% 50% 0; transform:rotate(-45deg); box-shadow:0 1px 3px rgba(0,0,0,.4); border:2px solid #fff; }
+  .pin span { transform:rotate(45deg); font-size:15px; line-height:1; }
   footer { text-align:center; color:var(--grey); font-size:.78rem; padding:16px; }
 </style>
 </head>
 <body>
+<script type="application/json" id="trip-meta">{"title": "Womo-Wochenende am Kleinen Brombachsee – Absberg", "subtitle": "Baden · Radeln · kurze Wanderung · Ruhe | Fr 24.–So 26. Juli 2026 | 2 Nächte | 2 Erw. + 2 Kinder (5 & 7)", "meta": [["Start", "Nähe Gessertshausen"], ["Basis", "Reisemobilhafen Badehalbinsel Absberg"], ["Strecke", "~250 km gesamt / je ~1 h 45"], ["Saison", "Hochsommer – Baden realistisch, warm"]], "map_center": [49.142, 10.892]}</script>
 <header>
-  <h1>🚐 Meine Womo-Touren</h1>
-  <p>3 Tour(en) · tippe auf eine Karte-Markierung oder eine Karte unten, um den Plan zu öffnen</p>
+  <h1>Womo-Wochenende am Kleinen Brombachsee – Absberg</h1>
+  <p>Baden · Radeln · kurze Wanderung · Ruhe | Fr 24.–So 26. Juli 2026 | 2 Nächte | 2 Erw. + 2 Kinder (5 &amp; 7)</p>
 </header>
 <div class="wrap">
+  <div class="metabar"><div class="meta"><span class="ml">Start</span><span class="mv">Nähe Gessertshausen</span></div><div class="meta"><span class="ml">Basis</span><span class="mv">Reisemobilhafen Badehalbinsel Absberg</span></div><div class="meta"><span class="ml">Strecke</span><span class="mv">~250 km gesamt / je ~1 h 45</span></div><div class="meta"><span class="ml">Saison</span><span class="mv">Hochsommer – Baden realistisch, warm</span></div><div class="meta"><span class="ml">Wetter</span><span class="mv">Trend: sonnig/warm (Mitte–Ende 20er) – 4 Tage vorher aber noch unsicher, kurz vor Abfahrt checken</span></div></div>
   <div id="map"></div>
-  <div class="cards"><a class="card" href="./Wochenende_Koenigssee.html"><h3>Wochenende am Königssee – Schönau</h3><p class="sub">Bootsfahrt · Baden · Ruhe &amp; Natur | 2 Nächte (Fr–So) | 2 Erwachsene + 2 Kinder (5 &amp; 7) | Wohnmobil 6,00 × 2,08 × 2,60 m</p><div class="chips"><span class="chip"><b>Start</b> Nähe Gessertshausen (b. Augsburg)</span><span class="chip"><b>Abfahrt</b> Freitag 15:00</span><span class="chip"><b>Strecke</b> ~250 km / ~2,5–3 h (A8/A99/A8, Ankunft ~18:00)</span></div><span class="open">Öffnen →</span></a><a class="card" href="./Wochenende_Oy-Mittelberg.html"><h3>Wochenende im Allgäu – Oy-Mittelberg</h3><p class="sub">Wandern · Natur · Spielplatz | 2 Nächte (Fr–So) | 2 Erwachsene + 2 Kinder (5 &amp; 7) | Wohnmobil 6,00 × 2,08 × 2,60 m</p><div class="chips"><span class="chip"><b>Start</b> Nähe Gessertshausen (b. Augsburg)</span><span class="chip"><b>Strecke</b> ~100 km / ~1,5 h je Richtung</span><span class="chip"><b>Ziel</b> Oy-Mittelberg, Oberallgäu (~1000 m)</span></div><span class="open">Öffnen →</span></a><a class="card" href="./brombachsee-absberg.html"><h3>Womo-Wochenende am Kleinen Brombachsee – Absberg</h3><p class="sub">Baden · Radeln · kurze Wanderung · Ruhe | Fr 24.–So 26. Juli 2026 | 2 Nächte | 2 Erw. + 2 Kinder (5 &amp; 7)</p><div class="chips"><span class="chip"><b>Start</b> Nähe Gessertshausen</span><span class="chip"><b>Basis</b> Reisemobilhafen Badehalbinsel Absberg</span><span class="chip"><b>Strecke</b> ~250 km gesamt / je ~1 h 45</span></div><span class="open">Öffnen →</span></a></div>
+  <div class="legend" id="legend"></div>
+
+  <h2 class="section-title">📅 Tagesplan</h2>
+  <div class="grid"><div class="card"><h3>Freitag 24.7. – Anreise &amp; Ankommen</h3><ul class="tl"><li><span class="t">ca. 14:00</span><span class="txt">Abfahrt nach frühem Mittagessen. ~125 km / ~1 h 45 über Donauwörth–Gunzenhausen.</span></li><li><span class="t">unterwegs</span><span class="txt">Großeinkauf auf dem Weg beim EDEKA Höfler in Pleinfeld (Fr 7–20 Uhr, sonntags zu!) – so seid ihr fürs Wochenende versorgt.</span></li><li><span class="t">ca. 16:00</span><span class="txt">Ankunft Reisemobilhafen Absberg. Kombikarte 15 € ziehen, Platz aussuchen (keine Reservierung – an heißen Wochenenden lohnt frühe Anreise für einen schattigen Platz).</span></li><li><span class="t">Nachmittag</span><span class="txt">2 Min zu Fuß an den Badestrand Halbinsel: erste Abkühlung. Kinder auf den Spielplatz am Wakepark, den Wakeboardern zuschauen (Fr ab 15 Uhr). Eltern: Liegewiese, See.</span></li><li><span class="t">Abend</span><span class="txt">Essen mit Seeblick in einem der Lokale an der Halbinsel oder selbst grillen. Sonnenuntergang über dem Wasser.</span></li></ul></div><div class="card"><h3>Samstag 25.7. – Igelsbachsee-Runde &amp; Baden</h3><ul class="tl"><li><span class="t">Vormittag</span><span class="txt">Gemütlich starten. Dann rüber zum ruhigen Igelsbachsee (per Rad ~10 min oder kurzer Transfer).</span></li><li><span class="t">ca. 10:30</span><span class="txt">Rundweg um den Igelsbachsee: ~6,5–7 km, eben, viel Waldschatten – ideal für Kinder. Highlights: Barfußpfad (1,9 km), Zip-Line des Abenteuerwaldes über den See zuschauen, Spielplatz + Sandstrand am Seespitz.</span></li><li><span class="t">Mittag</span><span class="txt">Einkehr im Strandhaus „Sand &amp; Sofa&quot; in Enderndorf (Pizza, Biergarten direkt am Strand). Danach Baden im Igelsbachsee – ruhiger und sandig.</span></li><li><span class="t">Tipp</span><span class="txt">7 km sind für die 5-Jährige das obere Ende – ihr könnt jederzeit abkürzen (nur Barfußpfad + Strand) oder die Runde mit dem Rad fahren. Wer klettern will: Abenteuerwald-Kinderrunde (Reservierung empfohlen).</span></li><li><span class="t">Abend</span><span class="txt">Zurück zum Womo, nochmal an der Halbinsel baden, entspanntes Abendessen.</span></li></ul></div><div class="card"><h3>Sonntag 26.7. – Trimaran-Fahrt &amp; Heimreise (~18:00 daheim)</h3><ul class="tl"><li><span class="t">ca. 09:45</span><span class="txt">Mit dem Rad (~2 km, eben) zur Anlegestelle Absberg. 1,5-h-Rundfahrt mit dem Trimaran MS Brombachsee (Erw. 10 €, Kinder 5 €) – großes Schiff, Eis an Bord, Räder fahren gratis mit.</span></li><li><span class="t">ca. 11:30</span><span class="txt">Zurück an der Halbinsel: letzter Bade- und Spielplatzstopp, Mittagessen/Eis.</span></li><li><span class="t">vor Abfahrt</span><span class="txt">Am Platz Ver-/Entsorgung: Grauwasser + Kassette leeren, Frischwasser tanken.</span></li><li><span class="t">ca. 15:30</span><span class="txt">Rückfahrt (~1 h 45) → gegen 18:00 wieder daheim.</span></li></ul></div></div>
+
+  <h2 class="section-title">🚐 Übernachtung</h2>
+  <div class="grid two"><div class="card"><h3>Reisemobilhafen Badehalbinsel Absberg <span class="fav">★ Favorit</span></h3><div class="kv"><b>Typ/Preis:</b> Reisemobilhafen (nur Wohnmobile) · 15 €/Nacht Kombikarte + 1,50 €/Erw./Nacht Gästebeitrag; Strom 1 €/kWh, Frischwasser 0,50 €/50 l, Warmdusche 0,50 €/min</div><div class="kv"><b>Womo-Tauglichkeit:</b> Womo-tauglich: ebener, offener Platz, KEINE Höhenschranke (2,60 m unproblematisch), 6 m passt locker. 230 Strom- + ~200 Reserveplätze.</div><div class="kv">Keine Reservierung möglich, aber laut Betreiber genug Ausweichplätze. An heißen Sommer-Wochenenden Fr früh anreisen. V+E und Warmduschen am Platz. Strom/Wasser/Dusche nur mit Geldwertkarte (vor Ort per Karte kaufbar). Geöffnet 23.3.–8.11.2026.</div></div></div>
+
+  <h2 class="section-title">🔀 Alternativen zur Auswahl</h2>
+  <div class="grid two"><div class="card"><h3>Stellplätze</h3><ul class="bul"><li><b>SeeCamping Langlau</b> – Komfort-Campingplatz am Kleinen Brombachsee, online buchbar, viel für Kinder – teurer. <a href="https://www.seecamping-langlau.de" target="_blank" rel="noopener">Link ↗</a></li><li><b>Wohnmobilstellplatz Ramsberg</b> – Gleicher Preis wie Absberg, am Großen Brombachsee – Rückfalloption bei vollem Platz. <a href="https://www.zv-brombachsee.de/wohnmobil/ramsberg/" target="_blank" rel="noopener">Link ↗</a></li></ul></div><div class="card"><h3>Aktivitäten</h3><ul class="bul"><li><b>Barfußpfad Igelsbachsee (1,9 km)</b> – Kurze, kinderfreundliche Variante der Igelsbachsee-Runde – über Kies, Sand, Matsch. Frei zugänglich.</li><li><b>Vogelinsel am Altmühlsee</b> – ~20 min entfernt: Aussichtsplattform, Störche &amp; Wasservögel – tolle kurze Kinderwanderung.</li><li><b>AbenteuerWald Enderndorf</b> – Kletterpark mit Zip-Line über den See – für die 7-Jährige ein Highlight (Reservierung empfohlen).</li></ul></div><div class="card"><h3>Schlechtwetter</h3><ul class="bul"><li><b>Freizeitbad Juramare Gunzenhausen</b> – Hallenbad mit Rutschen, Familien- und Saunabereich, ~20 min. Verlässlicher Regentag-Plan.</li></ul></div></div>
+
+  <div class="grid" style="margin-top:20px"><div class="card"><h3>💶 Kostenschätzung (grob)</h3><table class="cost"><thead><tr><th>Posten</th><th>Annahme</th><th>Betrag</th></tr></thead><tbody><tr><td>Sprit</td><td>~250 km × ~12 l/100 km × ~2,05 €/l (Diesel D, Juli &#x27;26)</td><td class="amt">~60–70 €</td></tr><tr><td>Stellplatz</td><td>2× Kombikarte 15 € + Gästebeitrag 2 Erw. × 2 Nächte (6 €), Kinder frei</td><td class="amt">~36 € (+ Strom)</td></tr><tr><td>Schifffahrt (optional So)</td><td>2 Erw. 10 € + 2 Ki. 5 €</td><td class="amt">30 €</td></tr><tr><td>Essen/Eis/Einkehr</td><td>2–3 Mahlzeiten unterwegs (grob)</td><td class="amt">~40–70 €</td></tr><tr class="tot"><td><b>Summe</b></td><td></td><td class="amt"><b>~130–210 €</b></td></tr></tbody></table><p class="note">Sparvariante: selbst kochen + Schiff weglassen → ~90–100 € (nur Sprit + Stellplatz). Optionaler Kletterpark käme extra dazu. Dieselpreis schwankt stark – kurz vor Abfahrt prüfen.</p></div><div class="card small"><h3>Quellen &amp; Checks</h3><p>Zweckverband Brombachsee (zv-brombachsee.de: Preise, Öffnungszeiten, Schifffahrt), Fränkisches Seenland / altmuehlfranken-entdecken.de (Igelsbachsee-Rundweg), msbrombachsee.com (Trimaran-Fahrplan/Preise), Google Maps (Koordinaten, Öffnungszeiten), Destatis/GlobalPetrolPrices (Dieselpreis Juli 2026), nordbayern.de &amp; Sonntagsblatt (Waller-Thematik 2025/2026). Preise/Öffnungszeiten können sich ändern – vor Ort bzw. kurz vorher prüfen.</p></div></div>
 </div>
-<footer>Übersicht erstellt mit dem Camping-Tour-Planer · index.html im selben Ordner wie die Touren lassen.</footer>
+<footer>Erstellt mit dem Camping-Tour-Planer · Angaben ohne Gewähr, bitte vor Ort prüfen.</footer>
 
 <script>
 /* @preserve
@@ -712,21 +743,51 @@ svg.leaflet-image-layer.leaflet-interactive path {
 //# sourceMappingURL=leaflet.js.map
 </script>
 <script>
-  const POINTS = [{"lat": 47.612, "lng": 12.99, "title": "Wochenende am Königssee – Schönau", "file": "Wochenende_Koenigssee.html"}, {"lat": 47.632, "lng": 10.435, "title": "Wochenende im Allgäu – Oy-Mittelberg", "file": "Wochenende_Oy-Mittelberg.html"}, {"lat": 49.142, "lng": 10.892, "title": "Womo-Wochenende am Kleinen Brombachsee – Absberg", "file": "brombachsee-absberg.html"}];
-  const map = L.map('map');
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap' }).addTo(map);
-  function icon(){ return L.divIcon({ className:'', iconSize:[30,30], iconAnchor:[15,29], popupAnchor:[0,-28],
-    html:'<div style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#2f5d3a;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)"><span style="transform:rotate(45deg);font-size:15px">🚐</span></div>' }); }
-  const pts = [];
-  POINTS.forEach(p => {
-    if (p.lat==null) return;
-    const m = L.marker([p.lat,p.lng], {icon:icon()}).addTo(map);
-    m.bindPopup('<b>'+p.title+'</b><br><a href="./'+p.file+'">Plan öffnen →</a>');
-    pts.push([p.lat,p.lng]);
+  const PLACES = [{"id": 0, "name": "Zuhause (Nähe Gessertshausen)", "cat": "start", "lat": 48.342, "lng": 10.716, "emoji": "🏠", "color": "#546e7a", "info": "Start- und Zielpunkt. Je Richtung ~125 km / ~1 h 45.", "price": "", "link": "", "fav": false}, {"id": 1, "name": "Reisemobilhafen Badehalbinsel Absberg", "cat": "stellplatz", "lat": 49.1385869, "lng": 10.8729998, "emoji": "🚐", "color": "#2f5d3a", "info": "Eure Basis, direkt am Kleinen Brombachsee. Womo-only, ebener offener Platz, keine Höhenschranke. 230 Plätze + ~200 Reserve, Warmduschen, V+E. Keine Reservierung – genug Ausweichplätze.", "price": "15 €/Nacht (Kombi) + 1,50 €/Erw.", "link": "https://www.zv-brombachsee.de/wohnmobil/preise/", "fav": true}, {"id": 2, "name": "Ver-/Entsorgung + Frischwasser", "cat": "versorgung", "lat": 49.1389, "lng": 10.8738, "emoji": "🚰", "color": "#4a6b8a", "info": "Direkt am Reisemobilhafen: Grauwasser, Kassette, Frischwasser. Zahlung für Wasser/Strom über Geldwertkarte (Karte).", "price": "Frischwasser 0,50 €/50 l", "link": "", "fav": false}, {"id": 3, "name": "Badestrand Halbinsel Absberg", "cat": "see", "lat": 49.1364848, "lng": 10.8715152, "emoji": "🏞️", "color": "#1e88a8", "info": "Sandiger Badestrand 2 Min vom Platz. Sauber, flach, gut für Kinder. Umkleide/Dusche, Gastro, Bootsverleih. Hinweis: an sandigen Stränden baden ist auch die Empfehlung wegen der Waller-Thematik (2025 am Großen See, nicht hier).", "price": "", "link": "", "fav": true}, {"id": 4, "name": "Badestrand Seespitz (ruhig, am Damm)", "cat": "see", "lat": 49.1385913, "lng": 10.8965449, "emoji": "🏞️", "color": "#1e88a8", "info": "Kleine, ruhige Bade-Oase am Damm zwischen Kleinem und Großem Brombachsee. Weniger Trubel.", "price": "", "link": "", "fav": false}, {"id": 5, "name": "Igelsbachsee (ruhig & sandig)", "cat": "see", "lat": 49.1444115, "lng": 10.9105319, "emoji": "🏞️", "color": "#1e88a8", "info": "Der kleinste, ruhigste der drei Seen. Schöner Sandstrand, Liegewiesen, Spielplatz, Tretboote. Klar und tief.", "price": "", "link": "", "fav": false}, {"id": 6, "name": "Igelsbachsee-Rundweg", "cat": "wandern", "lat": 49.1466, "lng": 10.9155, "emoji": "🥾", "color": "#b5651d", "info": "~6,5–7 km, eben, kinderwagen-/rollstuhlgerecht, viel Waldschatten. Mit Barfußpfad (1,9 km), Strand und Spielplatz – kurzweilig für Kinder.", "price": "", "link": "https://www.zv-brombachsee.de/wege/wanderweg_um_den_igelsbachsee-520/", "fav": true}, {"id": 7, "name": "AbenteuerWald Enderndorf (Zip-Line)", "cat": "natur", "lat": 49.1475175, "lng": 10.9103804, "emoji": "🌿", "color": "#3a8f5a", "info": "Hochseilgarten mit Zip-Line 500 m über den See (bis 60 km/h). Kinderrunde (Stationen 1–4) ab ~6–7 J. machbar. Reservierung empfohlen. Täglich 10–18 Uhr.", "price": "Kletterpaket ~ höher", "link": "", "fav": false}, {"id": 8, "name": "Radrunde am Kleinen Brombachsee", "cat": "rad", "lat": 49.1456, "lng": 10.8607, "emoji": "🚲", "color": "#2e7d32", "info": "Ebener, gut ausgebauter Uferweg. Vom Platz z. B. Richtung Langlau und zurück – kurze, flache Familienrunde direkt am Wasser.", "price": "", "link": "", "fav": true}, {"id": 9, "name": "Spielplatz am Wakepark", "cat": "spielplatz", "lat": 49.1385013, "lng": 10.8771646, "emoji": "🛝", "color": "#e08a00", "info": "Kleiner Spielplatz direkt am Strand – Eltern können von den Liegen aus zuschauen.", "price": "", "link": "", "fav": false}, {"id": 10, "name": "Abenteuerspielplatz Absberg", "cat": "spielplatz", "lat": 49.1391199, "lng": 10.872492, "emoji": "🛝", "color": "#e08a00", "info": "Neuer, großer Spielplatz (2024/25) für kleine & größere Kinder. Achtung: wenig Schatten – Sonnencreme/Hut mitnehmen.", "price": "", "link": "", "fav": false}, {"id": 11, "name": "Wakepark Brombachsee", "cat": "natur", "lat": 49.1382719, "lng": 10.8776184, "emoji": "🌿", "color": "#3a8f5a", "info": "Wasserski-/Wakeboard-Anlage mit Beachbar – toll zum Zuschauen für die Kinder. Fr ab 15, Sa/So ab 12:30 Uhr.", "price": "", "link": "https://www.google.com/maps?cid=14719720241787360968", "fav": false}, {"id": 12, "name": "Strandhaus „Sand & Sofa\" Enderndorf", "cat": "einkehr", "lat": 49.144745, "lng": 10.912904, "emoji": "🍽️", "color": "#a03535", "info": "Beliebtes Strandhaus am Igelsbachsee: Pizza, Biergarten, direkt am Sandstrand. Zur Mittagszeit oft Schlange – lohnt sich.", "price": "€€", "link": "", "fav": false}, {"id": 13, "name": "Gastronomie an der Badehalbinsel", "cat": "einkehr", "lat": 49.1378, "lng": 10.8745, "emoji": "🍽️", "color": "#a03535", "info": "Mehrere Lokale mit Seeblick direkt am Platz – kurze Wege abends mit Kindern.", "price": "", "link": "", "fav": false}, {"id": 14, "name": "Schiffsanleger Absberg (MS Brombachsee)", "cat": "see", "lat": 49.1379058, "lng": 10.9003808, "emoji": "🏞️", "color": "#1e88a8", "info": "Anleger des Trimarans am Großen Brombachsee. 1,5-h-Rundfahrt, Erw. 10 €, Kinder (5–16) 5 €. Räder gratis. Erste Abfahrt ~9:55 Uhr. Vom Platz per Rad gut erreichbar.", "price": "Erw. 10 € / Ki. 5 €", "link": "https://msbrombachsee.com/fahrplan-fahrpreise/", "fav": false}, {"id": 15, "name": "EDEKA Höfler Pleinfeld", "cat": "einkauf", "lat": 49.1018105, "lng": 10.9740309, "emoji": "🛒", "color": "#7a5aa0", "info": "Großer Supermarkt, liegt praktisch auf dem Anfahrtsweg. Mo–Sa 7–20 Uhr, Sonntag geschlossen – also Freitag einkaufen.", "price": "Mo–Sa 7–20", "link": "", "fav": false}, {"id": 16, "name": "Freizeitbad Juramare Gunzenhausen", "cat": "schlechtwetter", "lat": 49.1201633, "lng": 10.7566773, "emoji": "🌧️", "color": "#5c6bc0", "info": "Schlechtwetter-Plan B: Hallenbad mit Rutschen, Familienbereich, Sauna. ~20 min westlich.", "price": "", "link": "https://www.juramare.de", "fav": false}, {"id": 17, "name": "SeeCamping Langlau (Alternative)", "cat": "alternative", "lat": 49.1458, "lng": 10.8585, "emoji": "⭐", "color": "#c9a227", "info": "Komfort-Alternative: richtiger Campingplatz am Kleinen Brombachsee, buchbar, mehr Kinder-Infrastruktur (dafür teurer).", "price": "", "link": "", "fav": false}, {"id": 18, "name": "Wohnmobilstellplatz Ramsberg (Alternative)", "cat": "alternative", "lat": 49.1556, "lng": 10.9312, "emoji": "⭐", "color": "#c9a227", "info": "Gleicher Betreiber/Preis, am Großen Brombachsee – etwas anderes Flair, falls Absberg voll sein sollte.", "price": "", "link": "", "fav": false}];
+  const CATS = {"start": {"emoji": "🏠", "color": "#546e7a", "label": "Start/Heimat"}, "stellplatz": {"emoji": "🚐", "color": "#2f5d3a", "label": "Stellplatz"}, "versorgung": {"emoji": "🚰", "color": "#4a6b8a", "label": "Ver-/Entsorgung"}, "see": {"emoji": "🏞️", "color": "#1e88a8", "label": "See/Wasser"}, "wandern": {"emoji": "🥾", "color": "#b5651d", "label": "Wanderung"}, "natur": {"emoji": "🌿", "color": "#3a8f5a", "label": "Natur/Aussicht"}, "rad": {"emoji": "🚲", "color": "#2e7d32", "label": "Radtour"}, "spielplatz": {"emoji": "🛝", "color": "#e08a00", "label": "Spielplatz"}, "einkehr": {"emoji": "🍽️", "color": "#a03535", "label": "Einkehr"}, "einkauf": {"emoji": "🛒", "color": "#7a5aa0", "label": "Einkauf"}, "schlechtwetter": {"emoji": "🌧️", "color": "#5c6bc0", "label": "Schlechtwetter"}, "alternative": {"emoji": "⭐", "color": "#c9a227", "label": "Alternative"}};
+  const map = L.map('map').setView([49.142, 10.892], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  function makeIcon(p) {
+    return L.divIcon({
+      className: '', iconSize:[30,30], iconAnchor:[15,29], popupAnchor:[0,-28],
+      html: '<div class="pin" style="background:'+p.color+'"><span>'+p.emoji+'</span></div>'
+    });
+  }
+  function popupHtml(p) {
+    let h = '<b>'+p.emoji+' '+p.name+'</b>';
+    if (p.price) h += '<br><small>💶 '+p.price+'</small>';
+    if (p.info)  h += '<br>'+p.info;
+    if (p.link)  h += '<br><a href="'+p.link+'" target="_blank" rel="noopener">Mehr Infos ↗</a>';
+    return h;
+  }
+
+  const groups = {};
+  PLACES.forEach(p => {
+    if (p.lat == null || p.lng == null) return;
+    if (!groups[p.cat]) groups[p.cat] = L.layerGroup().addTo(map);
+    L.marker([p.lat, p.lng], {icon: makeIcon(p)}).bindPopup(popupHtml(p)).addTo(groups[p.cat]);
   });
-  if (pts.length > 1) map.fitBounds(pts, {padding:[40,40]});
-  else if (pts.length === 1) map.setView(pts[0], 9);
-  else map.setView([48.5,11.5], 6);
+
+  const overlays = {};
+  Object.keys(groups).forEach(cat => {
+    const c = CATS[cat] || {emoji:'📍', label:cat};
+    overlays[c.emoji+' '+(c.label||cat)] = groups[cat];
+  });
+  L.control.layers(null, overlays, {collapsed:false}).addTo(map);
+
+  const leg = document.getElementById('legend');
+  Object.keys(groups).forEach(cat => {
+    const c = CATS[cat] || {emoji:'📍', label:cat};
+    const el = document.createElement('span');
+    el.innerHTML = c.emoji+' <b>'+(c.label||cat)+'</b>';
+    leg.appendChild(el);
+  });
+
+  const pts = PLACES.filter(p=>p.lat!=null).map(p=>[p.lat,p.lng]);
+  if (pts.length) map.fitBounds(pts, {padding:[40,40]});
 </script>
 </body>
 </html>
